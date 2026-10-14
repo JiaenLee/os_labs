@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
@@ -24,7 +25,8 @@
 
 typedef struct {
     int flag;      // 1 for message passing, 2 for shared memory 紀錄使用那一種通訊方式
-    int semid;  // Semaphore set 的識別碼
+    sem_t *sender_sem;   // POSIX semaphore：通知 receiver 有新訊息
+    sem_t *receiver_sem; // POSIX semaphore：通知 sender 可以寫下一則訊息
     
     union{
         int msqid; //for system V api. You can replace it with structure for POSIX api 使用Message passing時存放佇列識別碼
@@ -41,5 +43,5 @@ typedef struct {
     char msgText[MAX_MSG_SIZE]; //：真正的文字內容
 } message_t;
 
-void receive(message_t* message_ptr, mailbox_t* mailbox_ptr);
-void send(message_t message, mailbox_t* mailbox_ptr);
+double receive(message_t* message_ptr, mailbox_t* mailbox_ptr);
+double send(message_t message, mailbox_t* mailbox_ptr);
