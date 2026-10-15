@@ -254,7 +254,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    printf("Communication time: %.9f seconds\n", communication_time);
+    printf("Communication time: %.6f milliseconds\n", communication_time * 1000.0);
 
     if (mechanism == SHARED_MEM && is_sender) {
         shmdt(mailbox.storage.shm_addr);
