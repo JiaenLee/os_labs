@@ -55,3 +55,8 @@ dkms.conf
 *.dwo
 lab1
 
+receiver_msg.txt
+receiver_shm.txt
+sender_msg.txt
+sender_shm.txt
+compare.txt
